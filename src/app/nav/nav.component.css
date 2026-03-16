@@ -1,0 +1,14 @@
+a{
+    display: inline-block;
+    text-decoration: none;
+}
+
+.navegacion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(200, 199, 199);
+}

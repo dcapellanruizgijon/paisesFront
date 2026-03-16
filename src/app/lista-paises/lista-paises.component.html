@@ -1,0 +1,46 @@
+<div>
+  <h2>Listado de paiss</h2>
+
+  <div *ngIf="cargando">
+    Cargando paiss...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <table *ngIf="!cargando && paises.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Miembro de la Onu</th>
+        <th>Moneda</th>
+        <th>Capital</th>
+        <th>Region</th>
+        <th>Banderas</th>
+        <th>Población</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pais of paises">
+        <td>{{ pais.id }}</td>
+        <td>{{ pais.nombre }}</td>
+        <td>
+          <span [class.si]="pais.miembroOnu" [class.no]="!pais.miembroOnu">
+            {{ pais.miembroOnu ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td>{{ pais.moneda }}</td>
+        <td>{{ pais.capital }}</td>
+        <td>{{ pais.region }}</td>
+        <td>{{ pais.banderas }}</td>
+        <td>{{ pais.poblacion }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!cargando && paises.length === 0">
+    No hay paiss registrados
+  </div>
+</div>
