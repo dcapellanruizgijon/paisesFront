@@ -14,8 +14,11 @@ export class ApiRestCountriesService {
   constructor(private http: HttpClient) { }
 
   //para recuperar los alumnos
-  getAllPaises(): Observable<Pais[]> {
-    return this.http.get<Pais[]>(this.apiUrl + 'all?fields=name,unMember,currencies,capital,region,flags,population');
+  // getAllPaises(): Observable<Pais[]> {
+  //   return this.http.get<Pais[]>(this.apiUrl + 'all?fields=name,unMember,currencies,capital,region,flags,population');
+  // }
+  getAllPaises(): Observable<any> {
+    return this.http.get(this.apiUrl + 'all?fields=name,unMember,currencies,capital,region,flags,population');
   }
 
   

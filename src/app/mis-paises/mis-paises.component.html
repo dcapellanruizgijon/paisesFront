@@ -1,0 +1,42 @@
+<!-- mis-paises.component.html -->
+<div>
+  <h2>Mis países para visitar</h2>
+
+  <div *ngIf="cargando">Cargando tus países...</div>
+
+  <!-- <div *ngIf="error" class="error">{{ error }}</div> -->
+
+  <!-- Tarjetas de países personales -->
+  <div class="paises-grid" *ngIf="!cargando && misPaises.length > 0">
+    <div class="pais-card" *ngFor="let pais of misPaises">
+      <img [src]="pais.bandera" alt="Bandera" class="bandera">
+      <h3>{{ pais.nombre }}</h3>
+      
+      <div class="info">
+        <p><strong>Motivo:</strong> {{ pais.motivoViaje }}</p>
+        <p><strong>Zona:</strong> {{ pais.zona }}</p>
+        <p><strong>Presupuesto:</strong> {{ pais.presupuesto | number }}€</p>
+        <p><strong>Prioridad:</strong> 
+          <span class="prioridad">{{ pais.prioridad }} ⭐</span>
+        </p>
+        <p *ngIf="pais.notasPersonales"><strong>Notas:</strong> {{ pais.notasPersonales }}</p>
+      </div>
+
+      <div class="acciones">
+        <button [routerLink]="['/editar-pais', pais.id]" class="btn-editar">
+          ✏️ Editar
+        </button>
+        <button (click)="eliminarPais(pais.id)" class="btn-eliminar">
+          🗑️ Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!cargando && misPaises.length === 0" class="vacio">
+    <p>No tienes países en tu lista todavía.</p>
+    <button routerLink="/lista-paises" class="btn-primary">
+      ✈️ Añadir tu primer país
+    </button>
+  </div>
+</div>

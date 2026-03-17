@@ -1,8 +1,13 @@
 <div>
-  <h2>Listado de paiss</h2>
+  <h2>Listado de países</h2>
+
+  <div style="margin: 20px 0;">
+    <input type="text" placeholder="Buscar país por nombre..." (input)="buscarPais($event)"
+      style="padding: 8px; width: 300px; font-size: 16px;">
+  </div>
 
   <div *ngIf="cargando">
-    Cargando paiss...
+    Cargando países...
   </div>
 
   <div *ngIf="error" class="error">
@@ -12,19 +17,18 @@
   <table *ngIf="!cargando && paises.length > 0">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Nombre</th>
-        <th>Miembro de la Onu</th>
+        <th>Miembro de la ONU</th>
         <th>Moneda</th>
         <th>Capital</th>
-        <th>Region</th>
-        <th>Banderas</th>
+        <th>Región</th>
+        <th>Bandera</th>
         <th>Población</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pais of paises">
-        <td>{{ pais.id }}</td>
+      <tr *ngFor="let pais of paisesFiltrados">
         <td>{{ pais.nombre }}</td>
         <td>
           <span [class.si]="pais.miembroOnu" [class.no]="!pais.miembroOnu">
@@ -34,13 +38,22 @@
         <td>{{ pais.moneda }}</td>
         <td>{{ pais.capital }}</td>
         <td>{{ pais.region }}</td>
-        <td>{{ pais.banderas }}</td>
-        <td>{{ pais.poblacion }}</td>
+        <td>
+          <figure>
+            <img [src]="pais.banderas" alt="Bandera de {{ pais.nombre }}" width="50" height="30">
+          </figure>
+        </td>
+        <td>{{ pais.poblacion | number }}</td>
+        <td>
+          <button (click)="irAAgregarPais(pais)" class="btn-viaje">
+            ✈️ Añadir a mis viajes
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 
   <div *ngIf="!cargando && paises.length === 0">
-    No hay paiss registrados
+    No hay países registrados
   </div>
 </div>

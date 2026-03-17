@@ -1,0 +1,78 @@
+<div class="container">
+    <!-- Mostrar mensaje de error si no hay país -->
+    <div *ngIf="errorMensaje" class="error-mensaje">
+        {{ errorMensaje }}
+        <br><br>
+        <button (click)="cancelar()" class="btn-primary">
+            ← Volver a la lista de países
+        </button>
+    </div>
+
+    <!-- Mostrar el formulario SOLO si hay país -->
+    <div *ngIf="paisData">
+        <h2>Añadir {{ paisData.nombre }} a mi lista de viajes</h2>
+
+        <div class="pais-info">
+            <img [src]="paisData.banderas" alt="Bandera de {{ paisData.nombre }}" width="100" height="60">
+            <div>
+                <h3>{{ paisData.nombre }}</h3>
+                <p><strong>Capital:</strong> {{ paisData.capital }}</p>
+                <p><strong>Región:</strong> {{ paisData.region }}</p>
+            </div>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Motivo del viaje *</label>
+                    <select formControlName="motivoViaje">
+                        <option value="">Selecciona...</option>
+                        <option value="Vacaciones">🏖️ Vacaciones</option>
+                        <option value="Trabajo">💼 Trabajo</option>
+                        <option value="Estudios">📚 Estudios</option>
+                        <option value="Familia">👪 Visitar familia</option>
+                        <option value="Aventura">⛰️ Aventura</option>
+                        <option value="Cultura">🎭 Cultura</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Zona/Región a visitar *</label>
+                    <input type="text" formControlName="zona" 
+                           placeholder="Ej: Costa, Montaña, Ciudad...">
+                </div>
+
+                <div class="form-group">
+                    <label>Presupuesto (€) *</label>
+                    <input type="number" formControlName="presupuesto" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Prioridad *</label>
+                    <select formControlName="prioridad">
+                        <option value="1">1 ⭐ (Baja)</option>
+                        <option value="2">2 ⭐⭐</option>
+                        <option value="3">3 ⭐⭐⭐ (Media)</option>
+                        <option value="4">4 ⭐⭐⭐⭐</option>
+                        <option value="5">5 ⭐⭐⭐⭐⭐ (Alta)</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Notas personales</label>
+                    <textarea formControlName="notasPersonales" rows="4"
+                              placeholder="¿Qué quieres hacer allí? ¿Algún plan especial?"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" [disabled]="form.invalid" class="btn-primary">
+                    ✅ Guardar en mi lista
+                </button>
+                <button type="button" (click)="cancelar()" class="btn-secondary">
+                    ❌ Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

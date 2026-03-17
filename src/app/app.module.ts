@@ -9,6 +9,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AgregarPaisComponent } from './agregar-pais/agregar-pais.component';
+import { MisPaisesComponent } from './mis-paises/mis-paises.component';
+import { EditarPaisComponent } from './editar-pais/editar-pais.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +21,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     NavComponent,
     HeaderComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AgregarPaisComponent,
+    MisPaisesComponent,
+    EditarPaisComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
