@@ -11,7 +11,7 @@ import { PaisPersonalService } from '../pais-personal.service';
   styleUrl: './editar-pais.component.css'
 })
 export class EditarPaisComponent {
-  form: FormGroup;
+  form: FormGroup;//form contiene si los campos son validos o invalidos
     paisId: number | null = null;
     paisOriginal: PaisPersonal | null = null;
 

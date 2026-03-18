@@ -1,42 +1,116 @@
-<!-- mis-paises.component.html -->
-<div>
-  <h2>Mis países para visitar</h2>
+<div class="container py-4">
+  <!-- Título -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="display-5 fw-bold text-success">
+        <i class="bi bi-star-fill me-2"></i>
+        Mis países para visitar
+      </h2>
+      <p class="lead text-muted">
+        Gestiona tu lista de destinos soñados
+      </p>
+    </div>
+  </div>
 
-  <div *ngIf="cargando">Cargando tus países...</div>
+  <!-- Mensaje de notificación (feedback) -->
+  <div *ngIf="mensaje" class="alert alert-info alert-dismissible fade show" role="alert">
+    <i class="bi bi-info-circle-fill me-2"></i>
+    {{ mensaje }}
+    <button type="button" class="btn-close" (click)="mensaje = ''"></button>
+  </div>
 
-  <!-- <div *ngIf="error" class="error">{{ error }}</div> -->
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="text-center py-5">
+    <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3 text-muted">Cargando tus países...</p>
+  </div>
 
-  <!-- Tarjetas de países personales -->
-  <div class="paises-grid" *ngIf="!cargando && misPaises.length > 0">
-    <div class="pais-card" *ngFor="let pais of misPaises">
-      <img [src]="pais.bandera" alt="Bandera" class="bandera">
-      <h3>{{ pais.nombre }}</h3>
-      
-      <div class="info">
-        <p><strong>Motivo:</strong> {{ pais.motivoViaje }}</p>
-        <p><strong>Zona:</strong> {{ pais.zona }}</p>
-        <p><strong>Presupuesto:</strong> {{ pais.presupuesto | number }}€</p>
-        <p><strong>Prioridad:</strong> 
-          <span class="prioridad">{{ pais.prioridad }} ⭐</span>
-        </p>
-        <p *ngIf="pais.notasPersonales"><strong>Notas:</strong> {{ pais.notasPersonales }}</p>
-      </div>
+  <!-- Grid de tarjetas -->
+  <div *ngIf="!cargando && misPaises.length > 0" class="row g-4">
+    <div *ngFor="let pais of misPaises" class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm hover-card">
+        <!-- Cabecera con bandera y título -->
+        <div class="card-header bg-success text-white py-3">
+          <div class="d-flex align-items-center">
+            <img [src]="pais.bandera" [alt]="'Bandera de ' + pais.nombre" 
+                 class="rounded me-3" 
+                 style="width: 50px; height: 35px; object-fit: cover; border: 2px solid white;">
+            <h3 class="h5 mb-0 fw-bold">{{ pais.nombre }}</h3>
+          </div>
+        </div>
 
-      <div class="acciones">
-        <button [routerLink]="['/editar-pais', pais.id]" class="btn-editar">
-          ✏️ Editar
-        </button>
-        <button (click)="eliminarPais(pais.id)" class="btn-eliminar">
-          🗑️ Eliminar
-        </button>
+        <!-- Cuerpo de la tarjeta -->
+        <div class="card-body">
+          <!-- Prioridad con estrellas -->
+          <div class="mb-3">
+            <span class="badge bg-warning text-dark p-2">
+              <i class="bi bi-star-fill me-1"></i>
+              Prioridad: {{ getEstrellas(pais.prioridad) }}
+            </span>
+          </div>
+
+          <!-- Información detallada -->
+          <ul class="list-unstyled">
+            <li class="mb-2">
+              <i class="bi bi-chat-quote text-success me-2"></i>
+              <strong>Motivo:</strong> {{ pais.motivoViaje }}
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-geo-alt text-success me-2"></i>
+              <strong>Zona:</strong> 
+              <span class="badge bg-info text-dark">{{ pais.zona }}</span>
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-wallet2 text-success me-2"></i>
+              <strong>Presupuesto:</strong> 
+              <span class="fw-bold text-success">{{ pais.presupuesto | number }}€</span>
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-exclamation-triangle text-success me-2"></i>
+              <strong>Prioridad:</strong> 
+              <span class="text-warning">{{ pais.prioridad }} / 5</span>
+            </li>
+            <li *ngIf="pais.notasPersonales" class="mb-2">
+              <i class="bi bi-journal-text text-success me-2"></i>
+              <strong>Notas:</strong>
+              <p class="mt-1 mb-0 p-2 bg-light rounded">
+                {{ pais.notasPersonales }}
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="card-footer bg-transparent border-top-0 pb-3">
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary flex-grow-1" 
+                    [routerLink]="['/editar-pais', pais.id]">
+              <i class="bi bi-pencil-square me-1"></i>
+              Editar
+            </button>
+            <button class="btn btn-outline-danger flex-grow-1" 
+                    (click)="eliminarPais(pais.id)">
+              <i class="bi bi-trash me-1"></i>
+              Eliminar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="!cargando && misPaises.length === 0" class="vacio">
-    <p>No tienes países en tu lista todavía.</p>
-    <button routerLink="/lista-paises" class="btn-primary">
-      ✈️ Añadir tu primer país
-    </button>
+  <!-- Estado vacío -->
+  <div *ngIf="!cargando && misPaises.length === 0" class="text-center py-5">
+    <div class="empty-state">
+      <i class="bi bi-suitcase-lg display-1 text-muted"></i>
+      <h3 class="mt-3 text-muted">No tienes países en tu lista</h3>
+      <p class="text-muted mb-4">¡Comienza a planear tu próxima aventura!</p>
+      <button class="btn btn-success btn-lg" routerLink="/lista-paises">
+        <i class="bi bi-plus-circle me-2"></i>
+        Añadir tu primer país
+      </button>
+    </div>
   </div>
 </div>

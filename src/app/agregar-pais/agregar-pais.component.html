@@ -1,78 +1,174 @@
-<div class="container">
-    <!-- Mostrar mensaje de error si no hay país -->
-    <div *ngIf="errorMensaje" class="error-mensaje">
-        {{ errorMensaje }}
-        <br><br>
-        <button (click)="cancelar()" class="btn-primary">
-            ← Volver a la lista de países
+<div class="container py-4">
+  <!-- Mensaje de error que sale cuando no se selecciona pais-->
+  <div *ngIf="errorMensaje" class="row">
+    <div class="col-12">
+      <div class="alert alert-warning alert-dismissible fade show text-center py-5" role="alert">
+        <i class="bi bi-exclamation-triangle display-1 d-block mb-4 text-warning"></i>
+        <h3 class="alert-heading mb-3">¡Ups! Algo salió mal</h3>
+        <p class="mb-4">{{ errorMensaje }}</p>
+        <hr>
+        <button class="btn btn-primary btn-lg mt-3" (click)="cancelar()">
+          <i class="bi bi-arrow-left me-2"></i>
+          Volver a la lista de países
         </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Mostrar el formulario SOLO si hay país -->
-    <div *ngIf="paisData">
-        <h2>Añadir {{ paisData.nombre }} a mi lista de viajes</h2>
-
-        <div class="pais-info">
-            <img [src]="paisData.banderas" alt="Bandera de {{ paisData.nombre }}" width="100" height="60">
+  <!-- Formulario principal que se muestra cuando se selecciona pais -->
+  <div *ngIf="paisData" class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <!-- Tarjeta principal -->
+      <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        
+        <!-- Cabecera con información del país -->
+        <div class="card-header bg-primary text-white py-4">
+          <div class="d-flex align-items-center">
+            <img [src]="paisData.banderas" [alt]="'Bandera de ' + paisData.nombre" 
+                 class="rounded-3 me-4 shadow" 
+                 style="width: 80px; height: 60px; object-fit: cover; border: 3px solid white;">
             <div>
-                <h3>{{ paisData.nombre }}</h3>
-                <p><strong>Capital:</strong> {{ paisData.capital }}</p>
-                <p><strong>Región:</strong> {{ paisData.region }}</p>
+              <h2 class="h3 mb-2 fw-bold">
+                <i class="bi bi-plus-circle me-2"></i>
+                Añadir a mi lista de viajes
+              </h2>
+              <h1 class="h2 mb-0">{{ paisData.nombre }}</h1>
             </div>
+          </div>
         </div>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Motivo del viaje *</label>
-                    <select formControlName="motivoViaje">
-                        <option value="">Selecciona...</option>
-                        <option value="Vacaciones">🏖️ Vacaciones</option>
-                        <option value="Trabajo">💼 Trabajo</option>
-                        <option value="Estudios">📚 Estudios</option>
-                        <option value="Familia">👪 Visitar familia</option>
-                        <option value="Aventura">⛰️ Aventura</option>
-                        <option value="Cultura">🎭 Cultura</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Zona/Región a visitar *</label>
-                    <input type="text" formControlName="zona" 
-                           placeholder="Ej: Costa, Montaña, Ciudad...">
-                </div>
-
-                <div class="form-group">
-                    <label>Presupuesto (€) *</label>
-                    <input type="number" formControlName="presupuesto" min="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Prioridad *</label>
-                    <select formControlName="prioridad">
-                        <option value="1">1 ⭐ (Baja)</option>
-                        <option value="2">2 ⭐⭐</option>
-                        <option value="3">3 ⭐⭐⭐ (Media)</option>
-                        <option value="4">4 ⭐⭐⭐⭐</option>
-                        <option value="5">5 ⭐⭐⭐⭐⭐ (Alta)</option>
-                    </select>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Notas personales</label>
-                    <textarea formControlName="notasPersonales" rows="4"
-                              placeholder="¿Qué quieres hacer allí? ¿Algún plan especial?"></textarea>
-                </div>
+        <!-- Cuerpo del formulario -->
+        <div class="card-body p-4 p-lg-5">
+          <!-- Info adicional del país en badges -->
+          <div class="row mb-4 g-2">
+            <div class="col-auto">
+              <span class="badge bg-info text-dark p-3">
+                <i class="bi bi-building me-2"></i>
+                Capital: {{ paisData.capital }}
+              </span>
             </div>
-
-            <div class="form-actions">
-                <button type="submit" [disabled]="form.invalid" class="btn-primary">
-                    ✅ Guardar en mi lista
-                </button>
-                <button type="button" (click)="cancelar()" class="btn-secondary">
-                    ❌ Cancelar
-                </button>
+            <div class="col-auto">
+              <span class="badge bg-success p-3">
+                <i class="bi bi-geo-alt me-2"></i>
+                Región: {{ paisData.region }}
+              </span>
             </div>
-        </form>
+          </div>
+
+          <!-- Formulario -->
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row g-4">
+              <!-- Motivo del viaje -->
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-chat-quote text-primary me-2"></i>
+                  Motivo del viaje *
+                </label>
+                <select class="form-select form-select-lg" formControlName="motivoViaje"
+                        [ngClass]="{'is-invalid': form.get('motivoViaje')?.invalid && form.get('motivoViaje')?.touched}">
+                  <option value="" disabled selected>Selecciona un motivo...</option>
+                  <option value="Vacaciones">🏖️ Vacaciones</option>
+                  <option value="Trabajo">💼 Trabajo</option>
+                  <option value="Estudios">📚 Estudios</option>
+                  <option value="Familia">👪 Visitar familia</option>
+                  <option value="Aventura">⛰️ Aventura</option>
+                  <option value="Cultura">🎭 Cultura</option>
+                </select>
+                <div *ngIf="form.get('motivoViaje')?.invalid && form.get('motivoViaje')?.touched" 
+                     class="invalid-feedback">
+                  El motivo del viaje es obligatorio
+                </div>
+              </div>
+
+              <!-- Zona que se va a visitar-->
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-pin-map text-primary me-2"></i>
+                  Zona/Región a visitar *
+                </label>
+                <input type="text" class="form-control form-control-lg" 
+                       formControlName="zona"
+                       [ngClass]="{'is-invalid': form.get('zona')?.invalid && form.get('zona')?.touched}"
+                       placeholder="Ej: Costa, Montaña, Ciudad...">
+                <div *ngIf="form.get('zona')?.invalid && form.get('zona')?.touched" 
+                     class="invalid-feedback">
+                  Indica qué zona quieres visitar
+                </div>
+              </div>
+
+              <!-- Presupuesto -->
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-wallet2 text-primary me-2"></i>
+                  Presupuesto (€) *
+                </label>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text bg-light">€</span>
+                  <input type="number" class="form-control" 
+                         formControlName="presupuesto" min="0" step="100"
+                         [ngClass]="{'is-invalid': form.get('presupuesto')?.invalid && form.get('presupuesto')?.touched}"
+                         placeholder="0">
+                </div>
+                <div *ngIf="form.get('presupuesto')?.invalid && form.get('presupuesto')?.touched" 
+                     class="invalid-feedback d-block">
+                  <span *ngIf="form.get('presupuesto')?.errors?.['required']">
+                    El presupuesto es obligatorio
+                  </span>
+                  <span *ngIf="form.get('presupuesto')?.errors?.['min']">
+                    El presupuesto no puede ser negativo
+                  </span>
+                </div>
+              </div>
+
+              <!-- Prioridad -->
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-star text-primary me-2"></i>
+                  Prioridad *
+                </label>
+                <select class="form-select form-select-lg" formControlName="prioridad">
+                  <option value="1">1 ⭐ (Baja)</option>
+                  <option value="2">2 ⭐⭐</option>
+                  <option value="3" selected>3 ⭐⭐⭐ (Media)</option>
+                  <option value="4">4 ⭐⭐⭐⭐</option>
+                  <option value="5">5 ⭐⭐⭐⭐⭐ (Alta)</option>
+                </select>
+              </div>
+
+              <!-- Notas personales (ocupa todo el ancho) -->
+              <div class="col-12">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-journal-text text-primary me-2"></i>
+                  Notas personales
+                </label>
+                <textarea class="form-control" formControlName="notasPersonales" 
+                          rows="5" placeholder="¿Qué quieres hacer allí? ¿Algún plan especial? 
+Ejemplos: Visitar la torre Eiffel, Probar comida típica, Excursión a la montaña..."></textarea>
+                <div class="form-text text-muted">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Opcional: Añade cualquier detalle importante para tu viaje
+                </div>
+              </div>
+
+              <!-- Botones de acción -->
+              <div class="col-12 mt-5">
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                  <button type="submit" class="btn btn-success btn-lg px-5" 
+                          [disabled]="form.invalid">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Guardar en mi lista
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-lg px-5" 
+                          (click)="cancelar()">
+                    <i class="bi bi-x-circle me-2"></i>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

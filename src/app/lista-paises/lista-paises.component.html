@@ -1,59 +1,169 @@
-<div>
-  <h2>Listado de países</h2>
-
-  <div style="margin: 20px 0;">
-    <input type="text" placeholder="Buscar país por nombre..." (input)="buscarPais($event)"
-      style="padding: 8px; width: 300px; font-size: 16px;">
+<div class="container py-4">
+  <app-grafica></app-grafica>
+  <br><br>
+  <!-- Título -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="display-5 fw-bold text-primary">
+        <i class="bi bi-globe-americas me-2"></i>
+        Listado de países
+      </h2>
+      <p class="lead text-muted">
+        Explora información detallada de países de todo el mundo
+      </p>
+    </div>
   </div>
 
-  <div *ngIf="cargando">
-    Cargando países...
+  <!-- Barra de búsqueda -->
+  <div class="row mb-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="input-group">
+        <span class="input-group-text bg-primary text-white">
+          <i class="bi bi-search"></i>
+        </span>
+        <input 
+          type="text" 
+          class="form-control form-control-lg" 
+          placeholder="Buscar país por nombre..." 
+          (input)="buscarPais($event)"
+        >
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="error" class="error">
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3 text-muted">Cargando países...</p>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
     {{ error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
-  <table *ngIf="!cargando && paises.length > 0">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Miembro de la ONU</th>
-        <th>Moneda</th>
-        <th>Capital</th>
-        <th>Región</th>
-        <th>Bandera</th>
-        <th>Población</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pais of paisesFiltrados">
-        <td>{{ pais.nombre }}</td>
-        <td>
-          <span [class.si]="pais.miembroOnu" [class.no]="!pais.miembroOnu">
-            {{ pais.miembroOnu ? 'Sí' : 'No' }}
-          </span>
-        </td>
-        <td>{{ pais.moneda }}</td>
-        <td>{{ pais.capital }}</td>
-        <td>{{ pais.region }}</td>
-        <td>
-          <figure>
-            <img [src]="pais.banderas" alt="Bandera de {{ pais.nombre }}" width="50" height="30">
-          </figure>
-        </td>
-        <td>{{ pais.poblacion | number }}</td>
-        <td>
-          <button (click)="irAAgregarPais(pais)" class="btn-viaje">
-            ✈️ Añadir a mis viajes
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Tabla de países (vista desktop) -->
+  <div *ngIf="!cargando && paisesFiltrados.length > 0" class="table-responsive">
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Bandera</th>
+          <th>Nombre</th>
+          <th>Capital</th>
+          <th>Región</th>
+          <th>Población</th>
+          <th>Moneda</th>
+          <th>ONU</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pais of paisesFiltrados">
+          <!-- Bandera -->
+          <td class="text-center align-middle">
+            <figure class="mb-0 d-flex flex-column justify-content-center">
+              <img [src]="pais.banderas" [alt]="'Bandera de ' + pais.nombre" 
+                   class="img-thumbnail" style="width: 60px; height: 40px; object-fit: cover; margin: 0 auto;"><!--el amrgin 0 auto para que se muestre en el centro-->
+            </figure>
+          </td>
+          
+          <!-- Nombre -->
+          <td class="fw-bold">{{ pais.nombre }}</td>
+          
+          <!-- Capital -->
+          <td>{{ pais.capital }}</td>
+          
+          <!-- Región -->
+          <td>
+            <span class="badge bg-info text-dark">{{ pais.region }}</span>
+          </td>
+          
+          <!-- Población -->
+          <td>
+            <span class="badge bg-secondary">{{ pais.poblacion | number }}</span>
+          </td>
+          
+          <!-- Moneda -->
+          <td>{{ pais.moneda }}</td>
+          
+          <!-- Miembro ONU -->
+          <td>
+            <span *ngIf="pais.miembroOnu" class="badge bg-success">
+              <i class="bi bi-check-circle-fill me-1"></i>Sí
+            </span>
+            <span *ngIf="!pais.miembroOnu" class="badge bg-danger">
+              <i class="bi bi-x-circle-fill me-1"></i>No
+            </span>
+          </td>
+          
+          <!-- Acciones -->
+          <td>
+            <button class="btn btn-sm btn-outline-primary" (click)="irAAgregarPais(pais)">
+              <i class="bi bi-plus-circle me-1"></i>
+              Añadir a viajes
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <div *ngIf="!cargando && paises.length === 0">
-    No hay países registrados
+  <!-- Vista de tarjetas para móviles -->
+  <div *ngIf="!cargando && paisesFiltrados.length > 0" class="row g-4 d-md-none">
+    <div class="col-12" *ngFor="let pais of paisesFiltrados">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-primary text-white py-2">
+          <h5 class="card-title mb-0">
+            <img [src]="pais.banderas" [alt]="'Bandera'" 
+                 class="me-2" style="width: 30px; height: 20px; object-fit: cover;">
+            {{ pais.nombre }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <li class="mb-2">
+              <i class="bi bi-building me-2 text-primary"></i>
+              <strong>Capital:</strong> {{ pais.capital }}
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-geo-alt me-2 text-primary"></i>
+              <strong>Región:</strong> 
+              <span class="badge bg-info text-dark">{{ pais.region }}</span>
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-people me-2 text-primary"></i>
+              <strong>Población:</strong> {{ pais.poblacion | number }}
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-cash me-2 text-primary"></i>
+              <strong>Moneda:</strong> {{ pais.moneda }}
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-flag me-2 text-primary"></i>
+              <strong>ONU:</strong>
+              <span *ngIf="pais.miembroOnu" class="badge bg-success ms-2">Sí</span>
+              <span *ngIf="!pais.miembroOnu" class="badge bg-danger ms-2">No</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer bg-transparent">
+          <button class="btn btn-primary w-100" (click)="irAAgregarPais(pais)">
+            <i class="bi bi-plus-circle me-2"></i>
+            Añadir a mis viajes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje sin resultados -->
+  <div *ngIf="!cargando && paisesFiltrados.length === 0" class="text-center py-5">
+    <i class="bi bi-emoji-frown display-1 text-muted"></i>
+    <p class="mt-3 fs-4 text-muted">No hay países registrados</p>
+    <p class="text-muted">Prueba con otro término de búsqueda</p>
   </div>
 </div>
