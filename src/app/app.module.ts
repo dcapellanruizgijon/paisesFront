@@ -13,6 +13,7 @@ import { AgregarPaisComponent } from './agregar-pais/agregar-pais.component';
 import { MisPaisesComponent } from './mis-paises/mis-paises.component';
 import { EditarPaisComponent } from './editar-pais/editar-pais.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GraficaComponent } from './grafica/grafica.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PageNotFoundComponent,
     AgregarPaisComponent,
     MisPaisesComponent,
-    EditarPaisComponent
+    EditarPaisComponent,
+    GraficaComponent
   ],
   imports: [
     BrowserModule,

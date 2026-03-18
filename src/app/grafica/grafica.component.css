@@ -1,0 +1,26 @@
+.grafica-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.grafica-container h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.grafica-wrapper {
+    height: 350px;
+    width: 100%;
+    position: relative;
+}
+
+.cargando, .error {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}

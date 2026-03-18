@@ -1,0 +1,15 @@
+<div class="grafica-container">
+    <h3>📊 Países más poblados</h3>
+    
+    <div *ngIf="cargando" class="cargando">
+        <p>Cargando gráfica...</p>
+    </div>
+
+    <div *ngIf="!cargando && paises.length > 0" class="grafica-wrapper">
+        <canvas id="miGrafica" width="400" height="300"></canvas>
+    </div>
+
+    <div *ngIf="!cargando && paises.length === 0" class="error">
+        No se pudieron cargar los datos
+    </div>
+</div>

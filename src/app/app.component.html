@@ -1,8 +1,22 @@
-<div class="separacion">
-  <div>
+<div class="d-flex flex-column min-vh-100">
+  <!-- Header y navegación -->
+  <header class="flex-shrink-0">
     <app-header></app-header>
     <app-nav></app-nav>
-    <router-outlet></router-outlet>
-  </div>
-  <app-footer></app-footer>
+  </header>
+
+  <!-- Contenido principal que ocupa todo el espacio disponible -->
+  <main class="flex-grow-1">
+    <app-grafica></app-grafica>
+    
+    <!-- Contenedor para las rutas -->
+    <div class="container my-4">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="flex-shrink-0">
+    <app-footer></app-footer>
+  </footer>
 </div>
