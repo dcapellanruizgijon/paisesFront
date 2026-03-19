@@ -15,6 +15,7 @@ import { EditarPaisComponent } from './editar-pais/editar-pais.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GraficaComponent } from './grafica/grafica.component';
 import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.componen
     MisPaisesComponent,
     EditarPaisComponent,
     GraficaComponent,
-    SobreNosotrosComponent
+    SobreNosotrosComponent,
+    ContactoComponent
   ],
   imports: [
     BrowserModule,
