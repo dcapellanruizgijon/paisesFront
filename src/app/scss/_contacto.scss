@@ -2,7 +2,6 @@
 @use 'variables' as v;
 @use 'mixins' as m;
 
-/* RESET */
 * {
     @include m.box-sizing(border-box);
     margin: 0;
