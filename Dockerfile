@@ -3,14 +3,16 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copiar package.json y package-lock.json
+# Copiar archivos de configuración
 COPY package*.json ./
+COPY angular.json ./
+COPY tsconfig*.json ./
 
 # Instalar dependencias
 RUN npm ci
 
-# Copiar el resto del código
-COPY . .
+# Copiar el código fuente
+COPY src ./src
 
 # Construir la app para producción
 RUN npm run build --prod
@@ -18,11 +20,11 @@ RUN npm run build --prod
 # Etapa 2: Servir con Nginx
 FROM nginx:alpine
 
-# Copiar la configuración personalizada de Nginx (opcional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Eliminar la configuración por defecto de Nginx (opcional)
+RUN rm /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos construidos desde la etapa anterior
-COPY --from=build /app/dist/tu-proyecto-angular /usr/share/nginx/html
+COPY --from=build /app/dist/tu-proyecto /usr/share/nginx/html
 
 # Exponer el puerto 80
 EXPOSE 80
