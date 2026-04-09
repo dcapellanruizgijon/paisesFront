@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PaisPersonalService {
 
-  private apiUrl = 'http://localhost:8080/api/paises';
+  private apiUrl = 'https://entornoclientepracticas.onrender.com/paises';
 
     constructor(private http: HttpClient) { }
 
