@@ -27,10 +27,8 @@
     text-align: center;
     width: 100%;
     
-    // PRIMERO propiedades normales
     transition: background-color 0.3s;
 
-    // DESPUÉS reglas anidadas
     @include tablet {
         width: auto;
     }

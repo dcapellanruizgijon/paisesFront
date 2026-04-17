@@ -1,14 +1,13 @@
-// 1. Tus variables
+// 1.Variables
 @forward 'variables';
 @forward 'mixins';
 @forward 'sobreNosotros';
 @forward 'contacto';
 
-// 2. Bootstrap completo (para desarrollo, luego podemos optimizar)
+// 2. Bootstrap completo 
 @use '../../../node_modules/bootstrap/scss/bootstrap';
 @use 'variables' as v;
 
-//estilos de otros archivos
 
 // Estilos comunes
 .navbar-brand {
