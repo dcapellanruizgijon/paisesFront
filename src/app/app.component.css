@@ -20,7 +20,7 @@ body {
 
 /* NAVBAR */
 .navbar {
-  background-color: #2973e3;
+  background-color: #313c45;
   padding: 1rem 0;
   position: sticky;
   top: 0;
@@ -130,7 +130,7 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 3rem;
-  color: #2973e3;
+  color: #313c45;
 }
 .section-title.text-center {
   text-align: center;
@@ -200,7 +200,7 @@ body {
 }
 .valor-card .valor-icon {
   font-size: 3rem;
-  color: #2973e3;
+  color: #313c45;
   margin-bottom: 1rem;
 }
 .valor-card h3 {
@@ -256,7 +256,7 @@ body {
   margin-bottom: 0.5rem;
 }
 .equipo-card .equipo-info .cargo {
-  color: #2973e3;
+  color: #313c45;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -281,7 +281,7 @@ body {
 
 /* ESTADÍSTICAS */
 .estadisticas {
-  background-color: #2973e3;
+  background-color: #313c45;
   color: white;
   padding: 4rem 0;
 }
@@ -349,7 +349,6 @@ body {
   opacity: 0.7;
 }
 
-/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -357,7 +356,7 @@ body {
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: sans-serif;
   line-height: 1.6;
   color: #212529;
 }
@@ -370,7 +369,7 @@ body {
 
 /* NAVBAR */
 .navbar {
-  background-color: #2973e3;
+  background-color: #313c45;
   padding: 1rem 0;
   position: sticky;
   top: 0;
@@ -433,7 +432,7 @@ body {
 
 /* PAGE HEADER */
 .page-header {
-  background-color: #2973e3;
+  background-color: #313c45;
   color: white;
   padding: 4rem 0;
   text-align: center;
@@ -472,7 +471,7 @@ body {
 /* INFO CONTACTO */
 .contacto-info .section-title {
   font-size: 2rem;
-  color: #2973e3;
+  color: #313c45;
   margin-bottom: 2rem;
 }
 
@@ -483,7 +482,7 @@ body {
 }
 .info-item .info-icon {
   font-size: 1.5rem;
-  color: #2973e3;
+  color: #313c45;
   flex-shrink: 0;
 }
 .info-item h3 {
@@ -505,7 +504,7 @@ body {
 }
 .contacto-formulario .section-title {
   font-size: 2rem;
-  color: #2973e3;
+  color: #313c45;
   margin-bottom: 2rem;
 }
 
@@ -544,8 +543,8 @@ body {
 }
 .form-group .form-control:focus {
   outline: none;
-  border-color: #2973e3;
-  box-shadow: 0 0 0 3px rgba(41, 115, 227, 0.1);
+  border-color: #313c45;
+  box-shadow: 0 0 0 3px rgba(49, 60, 69, 0.1);
 }
 .form-group select.form-control {
   appearance: none;
@@ -622,7 +621,7 @@ body {
 }
 
 .btn {
-  background-color: #2973e3;
+  background-color: #313c45;
   border: 0;
   border-radius: 1rem;
   color: white;
@@ -645,7 +644,7 @@ body {
   }
 }
 .btn:hover {
-  background-color: rgb(19.2066115702, 69.9669421488, 146.7933884298);
+  background-color: rgb(6.6440677966, 8.1355932203, 9.3559322034);
 }
 .btn i {
   font-size: 1rem;
@@ -671,7 +670,7 @@ body {
   background-color: rgb(60.7210300429, 65.7811158798, 70.2789699571);
 }
 .btn-primary {
-  background-color: #2973e3;
+  background-color: #313c45;
 }
 
 /* MAPA */
@@ -12584,11 +12583,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.navbar-brand {
+.navbar-diego {
   font-size: 2rem;
 }
-.navbar-brand span {
-  color: yellow;
+.navbar-diego span {
+  color: red;
 }
 
 .hero-section {
